@@ -9,7 +9,9 @@
 
 **Skills:** Data transformation, data analysis, and visualization
 
-## ‎💡 [Netflix Data Analysis](https://github.com/mk-duong/data-porfolio/blob/main/1.%20Netflix%20Data%20Analysis.ipynb)
+## ‎💡 Netflix Data Analysis
+**Code:** [Netflix Data Analysis](https://github.com/mk-duong/data-porfolio/blob/main/1.%20Netflix%20Data%20Analysis.ipynb)
+
 **Goal:** Answer questions relating to Netflix contents distribution as well as identify potential categories that can be included on the streaming services to target more audience
 
 **Description:** Kaggle's [Netflix Movies and TV Shows](https://www.kaggle.com/datasets/shivamb/netflix-shows) dataset contains a list of movies and shows from Netflix along with details such as cast, directors, ratings, release year, duration, etc.
