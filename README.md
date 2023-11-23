@@ -6,13 +6,9 @@
 **Description:** The dataset includes development statuses for a variety of software packages and the task assignment for each memeber. This is one of the visualization projects I did when working the current company and has been granted permission to share it publicly.
 
 **Techstack:** 
-- Data transformation: SQL
-  - Joins, Aggregate Functions, CASE statements
-  - CTEs, Windows Functions
-  - Converting data types
-    
+- Data transformation: SQL (Joins, Aggregate Functions, CTEs, Windows Functions, CASE statements)
 - Data visualization: Power BI
-  - Power Query: Star-schema data modelling
+  - Power Query: Data modelling
   - DAX: Create measures and custom dimensions
   
 
