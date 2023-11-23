@@ -3,11 +3,12 @@
 ## ‎💡 DDE Project Development
 **Goal:** Create an interactive dashboard visualizing a software project's development progress and analyze the working performance of team members
 
-**Description:** The dataset includes developing statuses for a variety of software packages throughout each phase and the task assignment for each memeber. This is a personal project using a team's interally-collected data with permission granted to use the data for transforming and visualizing.
+**Description:** The dataset includes developing statuses for a variety of software packages and the task assignment for each memeber. This is a personal project using a team's interally-collected data with permission granted to use the data for transforming and visualizing.
 
-**Techstack:** SQL, dbt, Power BI
-
-**Skills:** Data transformation, data analysis, and visualization
+**Techstack:** 
+- Data transformation: SQL (Joins, CTEs, Windows Functions, Aggregate Functions, CASE statements, converting data types)
+- Data visualization: Power BI (Data modelling using Power Query Editor, creating measures with DAX)
+  
 
 ## ‎💡 Netflix Data Analysis
 **Code:** [Netflix Data Analysis](https://github.com/mk-duong/data-porfolio/blob/main/1.%20Netflix%20Data%20Analysis.ipynb)
@@ -16,6 +17,6 @@
 
 **Description:** Kaggle's [Netflix Movies and TV Shows](https://www.kaggle.com/datasets/shivamb/netflix-shows) dataset contains a list of movies and shows from Netflix along with details such as cast, directors, ratings, release year, duration, etc.
 
-**Techstack:** Python, Pandas, Matplotlib
-
-**Skills:** Data cleaning and preprocessing, data analysis, and visualization
+**Techstack:** Python
+- Data cleaning and pre-processing: Pandas, Numpy
+- Data analysis and visualization: Matplotlib, Seaborn
