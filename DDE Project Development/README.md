@@ -1,8 +1,8 @@
 ### Scenario: 
-A team currently working in an software development project where task will be broken down into a number of sprints. As the project is scaling up, the leader requires creating a report to track the development progress of these software packages and the workload of team members.
+A team currently working in an software development project where task will be broken down into a number of sprints. As the project is scaling up, the leader requires creating a dashboard to track the development progress of these software packages and the workload of team members.
 
 ### Data transformation:
-These data are currently stored in BigQuery. While the raw data of each member's workload are already cleaned and ready for use, further transformation are still needed for the data of software packages' status in order to create a usable report.
+These data are currently stored in BigQuery. While the raw data of each member's workload are already cleaned and ready for use, further transformation are still needed for the data of software packages' status in order to create a usable dashboard.
 (Screenshot 2412)
 
 + Transformation script
