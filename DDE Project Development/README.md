@@ -8,7 +8,6 @@ These data are currently stored in BigQuery. While the raw data of each member's
 
 + Raw data:
 
-  ![raw_data](images/raw_data.png)
   
 + Transformed data:
   
