@@ -3,7 +3,8 @@ A team currently working in an software development project where task will be b
 
 ### Data transformation:
 These data are currently stored in BigQuery. While the raw data of each member's workload are already cleaned and ready for use, further transformation are still needed for the data of software packages' status in order to create a usable dashboard.
-(Screenshot 2412)
+
+![raw_data](images/raw_data.png)
 
 + Transformation script
 (Screenshot 2415)
