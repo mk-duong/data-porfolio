@@ -49,8 +49,7 @@ Cognos or New to Looker = IF('Package Status Compare'[Is Cognos]="Y", "Cognos", 
 ```
 
 ### Dashboard result
-![page_1](images/page_1.png)
-![page_2](images/page_2.png)
-![page_3](images/page_3.png)
-![page_4](images/page_4.png)
-![page_5](images/page_5.png)
+![page_1](images/page_1.GIF)
+![page_2](images/page_2.GIF)
+![page_3](images/page_3.GIF)
+![page_4](images/page_4.GIF)
