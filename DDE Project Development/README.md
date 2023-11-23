@@ -7,7 +7,8 @@ These data are currently stored in BigQuery. While the raw data of each member's
 [SQL transformation script]([https://github.com/mk-duong/data-porfolio/](https://github.com/mk-duong/data-porfolio/blob/main/DDE%20Project%20Development/transform_package_status.sql))
 
 + Raw data:
-
+  
+  ![raw_data_](images/raw_data_.png)
   
 + Transformed data:
   
