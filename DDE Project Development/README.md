@@ -4,14 +4,20 @@ A team currently working in an software development project where task will be b
 ### Data transformation:
 These data are currently stored in BigQuery. While the raw data of each member's workload are already cleaned and ready for use, further transformation are still needed for the data of software packages' status in order to create a usable dashboard.
 
-![raw_data](images/raw_data.png)
+[SQL transformation script]([https://github.com/mk-duong/data-porfolio/](https://github.com/mk-duong/data-porfolio/blob/main/DDE%20Project%20Development/transform_package_status.sql))
 
-+ Transformation script
-(Screenshot 2415)
++ Raw data:
+  
+  ![raw_data](images/raw_data.png)
+
++ Transformed data:
+  
+  ![transformed_data](images/transformed_data.png)
 
 ### Data modelling:
 Since star schema design are highly relevant to developing Power BI models especially when many fact tables sharing the same dimensions, Power Query Editor has been used to created different dimension tables from two fact tables (Package Status and Jira Ticket) and create relationships among them.
-(Screenshot 2417)
+
+![data_model](images/data_model.png)
 
 ### Using DAX:
 DAX is used to create various measures and custom dimensions in my model, for example:
@@ -41,3 +47,10 @@ RETURN DIVIDE(HitTargets, TotalPackages) + 0
 ```
 Cognos or New to Looker = IF('Package Status Compare'[Is Cognos]="Y", "Cognos", "New to Looker")
 ```
+
+### Dashboard result
+![page_1](images/page_1.png)
+![page_2](images/page_2.png)
+![page_3](images/page_3.png)
+![page_4](images/page_4.png)
+![page_5](images/page_5.png)
