@@ -17,7 +17,7 @@
   
 
 ## ‎💡 Netflix Data Analysis
-**Code:** [Netflix Data Analysis](https://github.com/mk-duong/data-porfolio/blob/main/1.%20Netflix%20Data%20Analysis.ipynb)
+**Code:** [Netflix Data Analysis](https://github.com/mk-duong/data-porfolio/blob/main/Netfix%20Data%20Analysis/netflix_data_analysis.ipynb.ipynb)
 
 **Goal:** Answer questions relating to Netflix contents distribution as well as identify potential categories that can be included on the streaming services to target more audience
 
