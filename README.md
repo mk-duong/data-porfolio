@@ -6,8 +6,14 @@
 **Description:** The dataset includes developing statuses for a variety of software packages and the task assignment for each memeber. This is a personal project using a team's interally-collected data with permission granted to use the data for transforming and visualizing.
 
 **Techstack:** 
-- Data transformation: SQL (Joins, CTEs, Windows Functions, Aggregate Functions, CASE statements, converting data types)
-- Data visualization: Power BI (Data modelling using Power Query Editor, creating measures with DAX)
+- Data transformation: SQL
+  - Joins, Aggregate Functions, CASE statements
+  - CTEs, Windows Functions
+  - Converting data types
+    
+- Data visualization: Power BI
+  - Power Query: Star-schema data modelling
+  - DAX: Create measures and custom dimensions
   
 
 ## ‎💡 Netflix Data Analysis
