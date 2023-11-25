@@ -36,23 +36,18 @@ WITH iteration_date AS (
     , LAG(actual_status) OVER(PARTITION BY package_name ORDER BY iteration_start_date) AS previous_status
   FROM n1st_join_table
 )
-
--- Creating dummy components --
-, dummy AS (
-  SELECT 
-    *
-    , MAX(iteration_start_date) OVER() AS latest_iteration
-  FROM n1st_join_table
-)
-
-, dummy_current_status AS (
+  
+, current_status AS (
   SELECT 
     package_name
     , actual_status AS current_status
-  FROM dummy
+  FROM (
+      SELECT *
+        , MAX(iteration_start_date) OVER() AS latest_iteration
+      FROM n1st_join_table
+  )
   WHERE iteration_start_date = latest_iteration
 )
---------------------------------
 
 , n2nd_join_table AS (
   SELECT
@@ -95,7 +90,7 @@ WITH iteration_date AS (
         WHEN actual_status ='Enhancement' THEN 6
         ELSE 7 END AS planning_status_decode
   FROM join_table_with_window AS j
-  LEFT JOIN dummy_current_status AS d
+  LEFT JOIN current_status AS d
     ON j.package_name = d.package_name
 )
 
