@@ -4,7 +4,7 @@ A team currently working in an software development project where task will be b
 ### Data transformation:
 These data are currently stored in BigQuery. While the raw data of each member's workload are already cleaned and ready for use, further transformation are still needed for the data of software packages' status in order to create a usable dashboard.
 
-- [SQL transformation script](https://github.com/mk-duong/data-porfolio/blob/main/DDE%20Project%20Development/SQL/transform_data.sql)
+- [SQL transformation script](https://github.com/mk-duong/data-porfolio/blob/main/DDE%20Project%20Development/SQL)
 
 - Raw data:
   
