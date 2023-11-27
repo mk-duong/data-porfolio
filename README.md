@@ -13,7 +13,9 @@
   - Power Query: Data modelling (star schema)
   - DAX: Create measures and custom dimensions
 
-**Gain:** Experience with SQL in BigQuery, and in-depth data modelling and visualization skills in Power BI
+**Gain:** 
+- Experience with SQL in BigQuery
+- In-depth data modelling and visualization skills in Power BI
 
   
 ## ‎💡 Netflix Data Analysis
@@ -24,17 +26,15 @@
 **Description:** Kaggle's [Netflix Movies and TV Shows](https://www.kaggle.com/datasets/shivamb/netflix-shows) dataset contains a list of movies and shows from Netflix along with details such as cast, directors, ratings, release year, duration, etc.
 
 **Techstack:** Python
-- Data cleaning and pre-processing: Pandas, Numpy
-- Data analysis and visualization: Matplotlib, Seaborn
+- Data cleaning & pre-processing: Pandas, Numpy
+- Data analysis & visualization: Matplotlib, Seaborn
 
-**Gain:** Data exploration and visualization with Python
-
-# Data Porfolio
+**Gain:** Data exploration and visualization skill with Python
 
 ## ‎💡 Ticketmaster ETL Pipeline
 **Files:** [Ticketmaster ETL Pipeline](https://github.com/mk-duong/data-porfolio/tree/main/Ticketmaster%20ETL%20Pipeline)
 
-**Goal:** Create a dashboard helping users to see what events are available near them
+**Goal:** Create a dashboard to help users see what events are available near them
 
 **Description:** A starter data pipeline project with Python, SQL Server, and Power BI to demonstrates my understading on ETL/ELT frameworks and how to design a simple data flow.
 
@@ -50,4 +50,5 @@ Data is fetched from Ticketmaster using Ticketmaster API and Python then pre-pro
 
 **Gain:**
 - Become familiar in working with API
-- Enhance exposure to Python coding and data modelling practices
+- Enhance exposure to Python coding
+- Implement data modelling practices
