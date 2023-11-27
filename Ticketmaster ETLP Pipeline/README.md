@@ -6,7 +6,7 @@ A starter data pipeline project with Python, dbt, Docker, Airflow, and Postgres.
 
 ## Dataset
 
-[Ticketmaster API](https://developer.ticketmaster.com/) was used to fetch raw data of events (e.g., concerts, sport events, etc) around the world. Working with this dataset has also helped me familiarize with API use as well : )
+[Ticketmaster API](https://developer.ticketmaster.com/) was used to fetch raw data of events
 
 ## Architecture
 
