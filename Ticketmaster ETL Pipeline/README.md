@@ -16,7 +16,7 @@ Regarding choice of data warehouse, I've decided to use Azure SQL Database to ga
 
 From the raw data, further [SQL transformation](Python%20&%20SQL/transform_data.sql) is carried out to rename the columns and recast the values with date data type to a cleaner format. 
 
-Star schema data modelling was also done in the data warehouse so that dimension and fact tables can be imported directly into Power BI to ensure model consistency in case it is shared among other users. The following image shows how the imported dimension and facts table would look like in Power BI:
+Star schema data modelling was also done in the data warehouse so that dimension and fact tables can be imported directly into Power BI to ensure model consistency in case it is shared among other users. The following image shows how the imported dimension and fact tables would look like in Power BI:
 
 ![data_model](images/data_model.png)
 
