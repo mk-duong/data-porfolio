@@ -14,7 +14,7 @@
   - DAX: Create measures and custom dimensions
 
 **Gain:** 
-- Experience with writing SQL in BigQuery
+- Experience with SQL in BigQuery
 - In-depth data modelling and visualization skills in Power BI
 
   
