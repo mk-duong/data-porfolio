@@ -14,7 +14,7 @@
   - DAX: Create measures and custom dimensions
 
 **Gain:** 
-- Experience with SQL in BigQuery
+- Experience with writing SQL in BigQuery
 - In-depth data modelling and visualization skills in Power BI
 
   
@@ -47,6 +47,6 @@
 ![data_pipeline](https://github.com/mk-duong/data-porfolio/blob/main/Ticketmaster%20ETL%20Pipeline/images/pipeline.png)
 
 **Gain:**
-- Become familiar in working with API
-- Enhance exposure to Python coding
-- Implement data modelling practices
+- Familiarity with API
+- Enhanced exposure to Python coding
+- Practice star schema data modelling
