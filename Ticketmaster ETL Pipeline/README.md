@@ -26,4 +26,4 @@ Lastly, data is visualized to show which events are available in six U.S. region
 ![dashboard](images/dashboard.png)
 
 ## Limitations
-Since the free limit of Ticketmaster API only allows a maximum of 1000 records per request, I had to narrow down the number of U.S. regions in which events are extracted. Also, due to the lack of actual ticket sales data, dummy data was created instead. While this project can be expected to be more refined regarding the aforementioned aspects, it still provides me a chance to improve my knowledge in writing Python code and practicing writing SQL as well as visualizing.
+Since the free limit of Ticketmaster API only allows a maximum of 1000 records per request, I had to narrow down the number of U.S. regions in which events are extracted. Also, due to the lack of actual ticket sales data, dummy data was created instead. While this project can be expected to be more refined regarding the aforementioned aspects, it still provides me a chance to improve my knowledge in writing Python code and practicing writing SQL as well as visualizing in Power BI.
