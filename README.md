@@ -49,4 +49,4 @@
 **Gain:**
 - Familiarity with API
 - Enhanced exposure to Python coding
-- Practice star schema data modelling
+- Practice data modelling
