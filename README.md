@@ -3,7 +3,7 @@
 ## ‎💡 DDE Project Development
 **Files:** [DDE Project Development](https://github.com/mk-duong/data-porfolio/tree/main/DDE%20Project%20Development)
 
-**Goal:** Create an interactive dashboard visualizing a software project's development progress and analyze the working performance of team members
+**Goal:** Create an interactive dashboard visualizing a software project's development progress and working performance of team members
 
 **Description:** The dataset includes development statuses for a variety of software packages and the task assignment for each memeber. This is one of the visualization projects I did when working the current company and has been granted permission to share it publicly.
 
