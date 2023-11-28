@@ -34,7 +34,7 @@
 ## ‎💡 Ticketmaster ETL Pipeline
 **Files:** [Ticketmaster ETL Pipeline](https://github.com/mk-duong/data-porfolio/tree/main/Ticketmaster%20ETL%20Pipeline)
 
-**Goal:** Create a simple data pipeline to build a dashboard allowing users see what events are available near them
+**Goal:** Create a simple data pipeline to build a dashboard allowing users to see what events are available near them
 
 **Description:** A starter ETL project with Python, SQL Server, and Power BI to demonstrates my understading on ETL/ELT frameworks and how to design a simple data flow. Data is fetched from Ticketmaster using Ticketmaster API and Python before being loaded into Azure SQL Database for further transformation. Finally, Power BI is used to visualize events information.
 
