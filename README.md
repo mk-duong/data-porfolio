@@ -1,4 +1,4 @@
-# Data Porfolio
+# Data Portfolio
 
 ## ‎💡 DDE Project Development
 **Files:** [DDE Project Development](https://github.com/mk-duong/data-porfolio/tree/main/DDE%20Project%20Development)
