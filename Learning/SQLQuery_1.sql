@@ -148,8 +148,9 @@ WHERE EmployeeKey IN (
 )
 ;
 
-/* Did the employees from the list above meet their sales quota?
-   Assume that their sales can be counted once order date is created */
+/* Did the employees from the list above meet or exceed their sales quota? 
+   If they exceed, then by how much (%)? 
+   (assume that their sales can be counted once order date is created) */
 WITH employee_quarterly_sales AS (
     SELECT
         s.EmployeeKey
@@ -163,23 +164,113 @@ WITH employee_quarterly_sales AS (
     GROUP BY s.EmployeeKey, d.CalendarYear, d.CalendarQuarter
 )
 
+-- There are instances where an employee's quarterly quota got updated (e.g., 2011-Q3)
+-- use the latest date on which quota was updated as the benchmark
+, max_date AS (
+    SELECT 
+        *
+        , MAX([Date]) OVER(PARTITION BY EmployeeKey, CalendarYear, CalendarQuarter) AS LatestUpdateDate
+    FROM [dbo].[FactSalesQuota]
+)
+
+, latest_quota AS (
+    SELECT
+        EmployeeKey
+        , CalendarYear
+        , CalendarQuarter
+        , SalesAmountQuota
+        , [Date]
+    FROM [max_date]
+    WHERE [Date] = LatestUpdateDate
+)
+
 SELECT 
     qs.EmployeeKey
     , qs.SalesYear
     , qs.SalesQuarter
     , qs.QuarterlySales
     , qt.SalesAmountQuota
-    , CASE 
-        WHEN qs.QuarterlySales >= qt.SalesAmountQuota THEN 'Y'
-        ELSE 'N' END AS ReachQuota
+    , CASE WHEN qs.QuarterlySales >= qt.SalesAmountQuota THEN 'Y' ELSE 'N' END AS ReachQuota
+    , CASE WHEN qs.QuarterlySales >= qt.SalesAmountQuota THEN (qs.QuarterlySales - qt.SalesAmountQuota) / qt.SalesAmountQuota * 100
+      ELSE null END AS Perc
 FROM 
-    employee_quarterly_sales qs
-    , [dbo].[FactSalesQuota] qt
+    [employee_quarterly_sales] qs
+    , [latest_quota] qt
 WHERE 
     qs.EmployeeKey = qt.EmployeeKey
     AND qs.SalesYear = qt.CalendarYear
     AND qs.SalesQuarter = qt.CalendarQuarter
-ORDER BY qs.SalesYear, qs.SalesQuarter
+ORDER BY qs.SalesYear, qs.SalesQuarter, EmployeeKey
 ;
 
-/* If they meet their quota, I want to inform their manager to give them a bonus */
+
+/* Provide a list of employee names who met their quota in 2011-Q3. 
+   Let's also inform their manager to give them a bonus! Provide their manager's info */
+-- Reuse previous query
+WITH employee_quarterly_sales AS (
+    SELECT
+        s.EmployeeKey
+        , d.CalendarYear AS SalesYear
+        , d.CalendarQuarter AS SalesQuarter
+        , SUM(s.SalesAmount) AS QuarterlySales
+    FROM [dbo].[FactResellerSales] s
+    LEFT JOIN [dbo].[DimDate] d
+        ON s.OrderDateKey = d.DateKey
+    WHERE s.EmployeeKey IN (272, 281, 282, 283, 284, 285, 286, 287, 288, 289)
+    GROUP BY s.EmployeeKey, d.CalendarYear, d.CalendarQuarter
+)
+
+, max_date AS (
+    SELECT 
+        *
+        , MAX([Date]) OVER(PARTITION BY EmployeeKey, CalendarYear, CalendarQuarter) AS LatestUpdateDate
+    FROM [dbo].[FactSalesQuota]
+)
+
+, latest_quota AS (
+    SELECT
+        EmployeeKey
+        , CalendarYear
+        , CalendarQuarter
+        , SalesAmountQuota
+        , [Date]
+    FROM [max_date]
+    WHERE [Date] = LatestUpdateDate
+)
+
+, reach_quota AS (
+    SELECT 
+        qs.EmployeeKey
+        , qs.SalesYear
+        , qs.SalesQuarter
+        , qs.QuarterlySales
+        , qt.SalesAmountQuota
+        , CASE WHEN qs.QuarterlySales >= qt.SalesAmountQuota THEN 'Y' ELSE 'N' END AS ReachQuota
+        , CASE WHEN qs.QuarterlySales >= qt.SalesAmountQuota THEN (qs.QuarterlySales - qt.SalesAmountQuota) / qt.SalesAmountQuota * 100
+          ELSE null END AS Perc
+    FROM 
+        [employee_quarterly_sales] qs
+        , [latest_quota] qt
+    WHERE 
+        qs.EmployeeKey = qt.EmployeeKey
+        AND qs.SalesYear = qt.CalendarYear
+        AND qs.SalesQuarter = qt.CalendarQuarter
+)
+-- New query
+SELECT
+    CONCAT(e1.FirstName, ' ', e1.LastName) AS EmployeeName
+    , a.QuarterlySales
+    , a.Perc
+    , CONCAT(e2.FirstName, ' ', e2.LastName) AS ManagerName
+FROM [reach_quota] a
+LEFT JOIN [dbo].[DimEmployee] e1
+    ON a.EmployeeKey = e1.EmployeeKey
+-- Self-join
+LEFT JOIN [dbo].[DimEmployee] e2
+    ON e1.ParentEmployeeKey = e2.EmployeeKey
+WHERE 
+    a.ReachQuota = 'Y'
+    AND a.SalesYear = 2011
+    AND a.SalesQuarter = 3
+ORDER BY a.SalesYear, a.SalesQuarter, a.Perc DESC
+;
