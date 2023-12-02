@@ -274,3 +274,32 @@ WHERE
     AND a.SalesQuarter = 3
 ORDER BY a.SalesYear, a.SalesQuarter, a.Perc DESC
 ;
+
+/* Provide the name, business type, and location of the 
+   top 10 resellers with most purchase amount in 2011-Q3?
+   Sort their total amount purchased in descending order */
+WITH top_ten AS (
+    SELECT TOP(10)
+        s.ResellerKey
+        , SUM(SalesAmount) AS TotalAmount
+    FROM [dbo].[FactResellerSales] s
+    LEFT JOIN [dbo].[DimDate] d
+        ON s.OrderDateKey = d.DateKey
+    WHERE d.CalendarYear = 2011
+        AND d.CalendarQuarter = 3
+    GROUP BY s.ResellerKey
+    ORDER BY TotalAmount DESC
+)
+
+SELECT 
+    g.EnglishCountryRegionName
+    , g.City
+    , r.ResellerName
+    , r.BusinessType
+FROM top_ten
+LEFT JOIN [dbo].[DimReseller] r
+    ON top_ten.ResellerKey = r.ResellerKey
+LEFT JOIN [dbo].[DimGeography] g
+    ON r.GeographyKey = g.GeographyKey
+ORDER BY top_ten.TotalAmount DESC
+;
