@@ -51,7 +51,7 @@ Cognos or New to Looker = IF('Package Status Compare'[Is Cognos]="Y", "Cognos", 
 ```
 
 ### Dashboard:
-Since sharing is limited in Power BI, I've created GIFs to show the interactiveness of dashboard!
+Since sharing is limited in Power BI, I've created GIFs to show the interactiveness of dashboard! (If the loading time is too long, please refer to [this folder](https://github.com/mk-duong/data-portfolio/tree/main/DDE%20Project%20Development/images) to view the dashboard snapshot.
 
 ![page_1](images/page_1.GIF)
 ![page_2](images/page_2.GIF)
