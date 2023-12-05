@@ -6,7 +6,7 @@ A team currently working in an software development project where task will be b
 ### Data transformation:
 These data are currently stored in BigQuery. While the raw data of each member's workload are already cleaned and ready for use, further transformation are still needed for the data of software packages' status in order to create a usable dashboard.
 
-- [SQL transformation script](https://github.com/mk-duong/data-porfolio/blob/main/PowerBI%20Data%20Visualization/SQL/packages_status_transform.sql)
+- [SQL transformation script](https://github.com/mk-duong/data-porfolio/blob/main/PowerBI_Data_Visualization/SQL/packages_status_transform.sql)
 
 - Raw data:
   
@@ -53,7 +53,7 @@ Cognos or New to Looker = IF('Package Status Compare'[Is Cognos]="Y", "Cognos", 
 ### Dashboard:
 Since sharing is limited in Power BI, I've created GIFs to show the interactiveness of dashboard!
 
-If the GIFs take too long to load, please refer to this [folder](https://github.com/mk-duong/data-portfolio/tree/main/PowerBI%20Data%20Visualization/images) to see the dashboard snapshots.
+If the GIFs take too long to load, please refer to this [folder](https://github.com/mk-duong/data-portfolio/tree/main/PowerBI_Data_Visualization/images) to see the dashboard snapshots.
 
 ![page_1](images/page_1.GIF)
 ![page_2](images/page_2.GIF)
