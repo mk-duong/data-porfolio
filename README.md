@@ -1,7 +1,7 @@
 # Data Portfolio
 
 ## ‎💡 PowerBI Data Visualization
-**Files:** [PowerBI Data Visualization](https://github.com/mk-duong/data-porfolio/tree/main/DDE%20Project%20Development)
+**Files:** [PowerBI Data Visualization](https://github.com/mk-duong/data-porfolio/tree/main/PowerBI%20Data%20Visualization)
 
 **Goal:** Create an interactive dashboard visualizing a software project's development progress and working performance of team members
 
