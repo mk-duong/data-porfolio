@@ -126,14 +126,15 @@ LEFT JOIN [dbo].[DimGeography] as g
 GROUP BY g.EnglishCountryRegionName
 )
 
-SELECT *
+SELECT 
+    EnglishCountryRegionName
     , CAST((OrderCounts * 1.0 / TotalOrders) * 100 AS DECIMAL(4,2)) AS PercOfGrandTotal
 FROM cte
 ORDER BY PercOfGrandTotal DESC
 ;
 
 /* Provide a list of info for sales person who have sold product ID 314 
-   What is their employee ID, full name and sales territory*/
+   What is their employee ID, full name, and sales territory*/
 SELECT 
     EmployeeKey
     , CONCAT(FirstName, ' ', LastName) AS FullName
@@ -196,13 +197,11 @@ SELECT
 FROM 
     [employee_quarterly_sales] qs
     , [latest_quota] qt
-WHERE 
-    qs.EmployeeKey = qt.EmployeeKey
+WHERE qs.EmployeeKey = qt.EmployeeKey
     AND qs.SalesYear = qt.CalendarYear
     AND qs.SalesQuarter = qt.CalendarQuarter
 ORDER BY qs.SalesYear, qs.SalesQuarter, EmployeeKey
 ;
-
 
 /* Provide a list of employee names who met their quota in 2011-Q3. 
    Let's also inform their manager to give them a bonus! Provide their manager's info */
@@ -251,16 +250,15 @@ WITH employee_quarterly_sales AS (
     FROM 
         [employee_quarterly_sales] qs
         , [latest_quota] qt
-    WHERE 
-        qs.EmployeeKey = qt.EmployeeKey
+    WHERE qs.EmployeeKey = qt.EmployeeKey
         AND qs.SalesYear = qt.CalendarYear
         AND qs.SalesQuarter = qt.CalendarQuarter
 )
 -- New query
 SELECT
-    CONCAT(e1.FirstName, ' ', e1.LastName) AS EmployeeName
+    a.EmployeeKey
+    , CONCAT(e1.FirstName, ' ', e1.LastName) AS EmployeeName
     , a.QuarterlySales
-    , a.Perc
     , CONCAT(e2.FirstName, ' ', e2.LastName) AS ManagerName
 FROM [reach_quota] a
 LEFT JOIN [dbo].[DimEmployee] e1
@@ -268,11 +266,23 @@ LEFT JOIN [dbo].[DimEmployee] e1
 -- Self-join
 LEFT JOIN [dbo].[DimEmployee] e2
     ON e1.ParentEmployeeKey = e2.EmployeeKey
-WHERE 
-    a.ReachQuota = 'Y'
+WHERE a.ReachQuota = 'Y'
     AND a.SalesYear = 2011
     AND a.SalesQuarter = 3
-ORDER BY a.SalesYear, a.SalesQuarter, a.Perc DESC
+ORDER BY a.SalesYear, a.SalesQuarter, a.QuarterlySales DESC
+;
+
+/* Did these employees handle a lot of reseller cutsomers during 2011-Q3? */
+SELECT 
+    s.EmployeeKey
+    , COUNT(DISTINCT s.ResellerKey) AS CustomerCounts
+FROM [dbo].[FactResellerSales] s
+LEFT JOIN [dbo].[DimDate] d
+    ON s.OrderDateKey = d.DateKey
+WHERE s.EmployeeKey IN (288, 281, 289, 286)
+    AND d.CalendarYear = 2011
+    AND d.CalendarQuarter = 3
+GROUP BY s.EmployeeKey
 ;
 
 /* Provide the name, business type, and location of the 
