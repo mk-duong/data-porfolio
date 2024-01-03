@@ -313,3 +313,265 @@ LEFT JOIN [dbo].[DimGeography] g
     ON r.GeographyKey = g.GeographyKey
 ORDER BY top_ten.TotalAmount DESC
 ;
+
+/* Total Sales? */
+SELECT 
+    s.SalesOrderNumber, p.ProductKey, SalesAmount
+    , cat.EnglishProductCategoryName
+    , sub.EnglishProductSubcategoryName
+FROM [dbo].[FactResellerSales] s
+LEFT JOIN [dbo].[DimProduct] p
+    ON s.ProductKey = p.ProductKey
+LEFT JOIN [dbo].[DimProductSubCategory] sub
+    ON p.ProductSubcategoryKey = sub.ProductSubcategoryKey
+LEFT JOIN [dbo].[DimProductCategory] cat
+    ON sub.ProductCategoryKey = cat.ProductCategoryKey
+;
+
+/* Total Sales? */
+SELECT 
+    s.SalesOrderNumber, p.ProductKey, SalesAmount
+    , cat.EnglishProductCategoryName
+    , sub.EnglishProductSubcategoryName
+FROM [dbo].[FactInternetSales] s
+LEFT JOIN [dbo].[DimProduct] p
+    ON s.ProductKey = p.ProductKey
+LEFT JOIN [dbo].[DimProductSubCategory] sub
+    ON p.ProductSubcategoryKey = sub.ProductSubcategoryKey
+LEFT JOIN [dbo].[DimProductCategory] cat
+    ON sub.ProductCategoryKey = cat.ProductCategoryKey
+ORDER BY s.SalesOrderNumber
+;
+
+SELECT 
+    s.SalesOrderNumber, SUM(SalesAmount) AS TotalSales, SUM(SUM(SalesAmount)) OVER() AS OverallSales
+FROM [dbo].[FactResellerSales] s
+LEFT JOIN [dbo].[DimProduct] p
+    ON s.ProductKey = p.ProductKey
+LEFT JOIN [dbo].[DimProductSubCategory] sub
+    ON p.ProductSubcategoryKey = sub.ProductSubcategoryKey
+LEFT JOIN [dbo].[DimProductCategory] cat
+    ON sub.ProductCategoryKey = cat.ProductCategoryKey
+WHERE cat.EnglishProductCategoryName='Bikes'
+GROUP BY SalesOrderNumber
+;
+
+/* Is there any sales during July-Dec FY2010 */
+SELECT *
+FROM [dbo].[FactInternetSales] s
+LEFT JOIN [dbo].[DimDate] d
+    ON s.OrderDateKey = d.DateKey
+WHERE d.FiscalYear = 2010
+AND MonthNumberOfYear IN (7,8,9,10,11,12)
+;
+
+/* Sales in Canada? */
+SELECT g.City, SUM(SalesAmount)
+FROM [dbo].[FactInternetSales] s
+LEFT JOIN [dbo].[DimCustomer] c
+    ON s.CustomerKey = c.CustomerKey
+LEFT JOIN [dbo].[DimGeography] g
+    ON c.GeographyKey = g.GeographyKey
+WHERE g.EnglishCountryRegionName = 'Canada'
+GROUP BY g.City
+;
+
+/* Why loss in Feb 2012 */
+-- What products cost more than it's sold?
+
+SELECT SUM(TotalProductCost) AS TotalCost, SUM(SalesAmount) AS TotalSales
+FROM [dbo].[FactInternetSales] s
+LEFT JOIN [dbo].[DimDate] d
+    ON s.OrderDateKey = d.DateKey
+LEFT JOIN [dbo].[DimProduct] p
+    ON s.ProductKey = p.ProductKey
+WHERE d.FiscalYear = 2012
+    AND d.MonthNumberOfYear = 2
+;
+-- => internet profit
+
+SELECT SUM(TotalProductCost) AS TotalCost, SUM(SalesAmount) AS TotalSales
+FROM [dbo].[FactResellerSales] s
+LEFT JOIN [dbo].[DimDate] d
+    ON s.OrderDateKey = d.DateKey
+LEFT JOIN [dbo].[DimProduct] p
+    ON s.ProductKey = p.ProductKey
+WHERE d.FiscalYear = 2012
+    AND d.MonthNumberOfYear = 2
+;
+-- => reseller loss
+
+SELECT DISTINCT p.EnglishProductName
+FROM [dbo].[FactResellerSales] s
+
+LEFT JOIN [dbo].[DimDate] d
+    ON s.OrderDateKey = d.DateKey
+LEFT JOIN [dbo].[DimProduct] p
+    ON s.ProductKey = p.ProductKey
+LEFT JOIN [dbo].[DimProductSubCategory] sub
+    ON p.ProductSubcategoryKey = sub.ProductSubcategoryKey
+LEFT JOIN [dbo].[DimProductCategory] cat
+    ON sub.ProductCategoryKey = cat.ProductCategoryKey
+
+WHERE d.FiscalYear = 2012
+    AND d.MonthNumberOfYear = 2
+    AND cat.EnglishProductCategoryName = 'Bikes'
+GROUP BY p.EnglishProductName
+HAVING SUM(TotalProductCost) > SUM(SalesAmount)
+;
+-- These bike products has higher cost than they're sold
+
+/* Are the above products doing well in other months in 2012, or still as bad? so i can consider stop producing them / try to increase their sales / etc.? */
+SELECT
+    p1.EnglishProductName
+    , SUM(CASE WHEN d1.MonthNumberOfYear = 1 THEN SalesAmount - TotalProductCost END) AS 'Jan'
+    , SUM(CASE WHEN d1.MonthNumberOfYear = 2 THEN SalesAmount - TotalProductCost END) AS 'Feb'
+    , SUM(CASE WHEN d1.MonthNumberOfYear = 3 THEN SalesAmount - TotalProductCost END) AS 'Mar'
+    , SUM(CASE WHEN d1.MonthNumberOfYear = 4 THEN SalesAmount - TotalProductCost END) AS 'Apr'
+    , SUM(CASE WHEN d1.MonthNumberOfYear = 5 THEN SalesAmount - TotalProductCost END) AS 'May'
+    , SUM(CASE WHEN d1.MonthNumberOfYear = 6 THEN SalesAmount - TotalProductCost END) AS 'Jun'
+    , SUM(CASE WHEN d1.MonthNumberOfYear = 7 THEN SalesAmount - TotalProductCost END) AS 'Jul'
+    , SUM(CASE WHEN d1.MonthNumberOfYear = 8 THEN SalesAmount - TotalProductCost END) AS 'Aug'
+    , SUM(CASE WHEN d1.MonthNumberOfYear = 5 THEN SalesAmount - TotalProductCost END) AS 'Sep'
+    , SUM(CASE WHEN d1.MonthNumberOfYear = 6 THEN SalesAmount - TotalProductCost END) AS 'Oct'
+    , SUM(CASE WHEN d1.MonthNumberOfYear = 7 THEN SalesAmount - TotalProductCost END) AS 'Nov'
+    , SUM(CASE WHEN d1.MonthNumberOfYear = 8 THEN SalesAmount - TotalProductCost END) AS 'Dec'
+
+FROM [dbo].[FactResellerSales] s1
+LEFT JOIN [dbo].[DimDate] d1
+    ON s1.OrderDateKey = d1.DateKey
+LEFT JOIN [dbo].[DimProduct] p1
+    ON s1.ProductKey = p1.ProductKey
+
+WHERE d1.FiscalYear = 2012
+    AND p1.EnglishProductName IN (
+        'Road-250 Black, 44'
+        , 'Road-250 Black, 48'
+        , 'Road-250 Black, 52'
+        , 'Road-250 Black, 58'
+        , 'Road-250 Red, 58'
+        , 'Road-350-W Yellow, 40'
+        , 'Road-350-W Yellow, 42'
+        , 'Road-350-W Yellow, 44'
+        , 'Road-350-W Yellow, 48'
+        , 'Road-550-W Yellow, 38'
+        , 'Road-550-W Yellow, 40'
+        , 'Road-550-W Yellow, 42'
+        , 'Road-550-W Yellow, 44'
+        , 'Road-550-W Yellow, 48'
+        , 'Road-750 Black, 44'
+        , 'Road-750 Black, 48'
+        , 'Road-750 Black, 52'
+        , 'Road-750 Black, 58'
+        , 'Touring-1000 Blue, 46'
+        , 'Touring-1000 Blue, 50'
+        , 'Touring-1000 Blue, 54'
+        , 'Touring-1000 Blue, 60'
+        , 'Touring-1000 Yellow, 46'
+        , 'Touring-1000 Yellow, 50'
+        , 'Touring-1000 Yellow, 54'
+        , 'Touring-1000 Yellow, 60'
+        , 'Touring-2000 Blue, 46'
+        , 'Touring-2000 Blue, 50'
+        , 'Touring-2000 Blue, 54'
+        , 'Touring-2000 Blue, 60'
+        , 'Touring-3000 Blue, 44'
+        , 'Touring-3000 Blue, 50'
+        , 'Touring-3000 Blue, 54'
+        , 'Touring-3000 Blue, 58'
+        , 'Touring-3000 Blue, 62'
+        , 'Touring-3000 Yellow, 44'
+        , 'Touring-3000 Yellow, 50'
+        , 'Touring-3000 Yellow, 54'
+        , 'Touring-3000 Yellow, 58'
+        , 'Touring-3000 Yellow, 62'
+    )
+GROUP BY p1.EnglishProductName
+;
+
+/* Why sales in Aug 2011 - 2012 vast difference? */
+-- How many orders from internet in Aug 2011 and 2012
+SELECT 
+    d.FiscalYear
+    , COUNT(DISTINCT SalesOrderNumber)
+FROM [dbo].[FactInternetSales] s
+LEFT JOIN [dbo].[DimDate] d
+    ON s.OrderDateKey = d.DateKey
+LEFT JOIN [dbo].[DimProduct] p
+    ON s.ProductKey = p.ProductKey
+LEFT JOIN [dbo].[DimProductSubCategory] sub
+    ON p.ProductSubcategoryKey = sub.ProductSubcategoryKey
+LEFT JOIN [dbo].[DimProductCategory] cat
+    ON sub.ProductCategoryKey = cat.ProductCategoryKey
+WHERE d.FiscalYear IN (2011, 2012)
+    AND d.MonthNumberOfYear = 8
+    AND cat.EnglishProductCategoryName = 'Bikes'
+GROUP BY d.FiscalYear
+;
+-- => Orders from Internet increased
+
+-- How many orders from reseller in Aug 2011 and 2012
+SELECT 
+    d.FiscalYear
+    , COUNT(DISTINCT SalesOrderNumber)
+FROM [dbo].[FactResellerSales] s
+LEFT JOIN [dbo].[DimDate] d
+    ON s.OrderDateKey = d.DateKey
+LEFT JOIN [dbo].[DimProduct] p
+    ON s.ProductKey = p.ProductKey
+LEFT JOIN [dbo].[DimProductSubCategory] sub
+    ON p.ProductSubcategoryKey = sub.ProductSubcategoryKey
+LEFT JOIN [dbo].[DimProductCategory] cat
+    ON sub.ProductCategoryKey = cat.ProductCategoryKey
+WHERE d.FiscalYear IN (2011, 2012)
+    AND d.MonthNumberOfYear = 8
+    AND cat.EnglishProductCategoryName = 'Bikes'
+GROUP BY d.FiscalYear
+;
+-- => Orders from reseller Aug-2011 < Aug-2012
+-- => Reseller usually have significant sales amount => their decrease in number of orders have led to a huge sales drop
+
+/* Why orders peak in Jun 2012 (hint: Customer accounts for the majority of orders*/
+-- Is it because promotions are available in Jun 2012?
+SELECT *
+FROM (
+    SELECT *
+    FROM [dbo].[DimPromotion] p
+    WHERE p.StartDate BETWEEN '20120101' AND '20121231'
+        OR p.EndDate BETWEEN '20120101' AND '20121231'
+) AS sub
+WHERE MONTH(sub.StartDate) <= 6
+    AND MONTH(sub.StartDate) > 6
+;
+-- => It's not promotions that affect the peak in orders
+
+-- Is it because many new customers joined in Jun 2012?
+SELECT COUNT(*)
+FROM [dbo].[DimCustomer]
+WHERE DateFirstPurchase BETWEEN '20120601' AND '20120630'
+;
+
+SELECT COUNT(DISTINCT CustomerKey)
+FROM [dbo].[FactInternetSales] s
+LEFT JOIN [dbo].[DimDate] d
+    ON s.OrderDateKey = d.DateKey
+WHERE FiscalYear = 2012
+    AND MonthNumberOfYear = 6
+;
+
+
+/* Sales Variance for each fiscal month in 2012 */
+SELECT
+    d.MonthNumberOfYear
+    , SUM(s.OrderQuantity * p.ListPrice) AS BudgetedSales
+    , SUM(s.SalesAmount) AS ActualSales
+    , AVG( (s.SalesAmount - s.OrderQuantity * p.ListPrice) * 1.0 / (s.OrderQuantity * p.ListPrice) * 100 ) AS Variance
+FROM [dbo].[FactResellerSales] s
+LEFT JOIN [dbo].[DimDate] d
+    ON s.OrderDateKey = d.DateKey
+LEFT JOIN [dbo].[DimProduct] p
+    ON s.ProductKey = p.ProductKey
+WHERE d.FiscalYear = 2012
+GROUP BY d.MonthNumberOfYear
+ORDER BY d.MonthNumberOfYear
+;

@@ -23,7 +23,7 @@
 
 **Goal:** Answer questions relating to Netflix contents distribution as well as identify potential categories that can be included on the streaming services to target more audience
 
-**Description:** Kaggle's [Netflix Movies and TV Shows](https://www.kaggle.com/datasets/shivamb/netflix-shows) dataset contains a list of movies and shows from Netflix along with details such as cast, directors, ratings, release year, duration, etc.
+**Description:** This is one of the two capstone projects I've completed for Coursera's Google Data Analytics Professional Certificate. To conduct the analysis, I've used Kaggle's [Netflix Movies and TV Shows](https://www.kaggle.com/datasets/shivamb/netflix-shows) dataset that contains a list of movies and shows from Netflix along with details such as cast, directors, ratings, release year, duration, etc. 
 
 **Techstack:** Python
 - Data cleaning & pre-processing: Pandas, Numpy
