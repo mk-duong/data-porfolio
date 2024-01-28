@@ -7,14 +7,14 @@
 
 ### Data ingestion:
 
-This [Python script](Python%20&%20SQL/ingest_data.py) creates a workflow of data ingestion by first using API to fetch information of events. Since the extracted data is returned as a nested JSON file, it needs to be flattened before being loaded into data warehouse. 
+This [Python script](https://github.com/mk-duong/data-portfolio/blob/main/Ticketmaster%20ETL%20Pipeline/Python_SQL/ingest_data.py) creates a workflow of data ingestion by first using API to fetch information of events. Since the extracted data is returned as a nested JSON file, it needs to be flattened before being loaded into data warehouse. 
 
 ### Data transformation & modelling:
 Regarding choice of data warehouse, I've decided to use Azure SQL Database to gain experience with the cloud version of SQL Server, from intializing a database in Azure portal to configuring database connection using Python. The following image shows how raw data is stored in the database:
 
 ![azure_data](images/azure_data.png)
 
-From the raw data, further [SQL transformation](Python%20&%20SQL/transform_data.sql) is carried out to rename the columns and recast the values with date data type to a cleaner format. Star schema data modelling was also done in the data warehouse so that dimension and fact tables can be imported directly into Power BI to ensure model consistency in case it is shared among other users. The following image shows how the imported dimension and fact tables would look like in Power BI:
+From the raw data, further [SQL transformation](https://github.com/mk-duong/data-portfolio/blob/main/Ticketmaster%20ETL%20Pipeline/Python_SQL/transform_data.sql) is carried out to rename the columns and recast the values with date data type to a cleaner format. Star schema data modelling was also done in the data warehouse so that dimension and fact tables can be imported directly into Power BI to ensure model consistency in case it is shared among other users. The following image shows how the imported dimension and fact tables would look like in Power BI:
 
 ![data_model](images/data_model.png)
 
