@@ -14,7 +14,7 @@ Regarding choice of data warehouse, I've decided to use Azure SQL Database to ga
 
 ![azure_data](images/azure_data.png)
 
-From the raw data, further [SQL transformation](Python%20&%20SQL/transform_data.sql) is carried out to rename the columns and recast the values with date data type to a cleaner format. Star schema data modelling was also done in the data warehouse so that dimension and fact tables can be imported directly into Power BI to ensure model consistency in case it is shared among other users. The following image shows how the imported dimension and fact tables would look like in Power BI:
+From the raw data, further [SQL transformation](https://github.com/mk-duong/data-portfolio/blob/main/Ticketmaster%20ETL%20Pipeline/Python_SQL/transform_data.sql) is carried out to rename the columns and recast the values with date data type to a cleaner format. Star schema data modelling was also done in the data warehouse so that dimension and fact tables can be imported directly into Power BI to ensure model consistency in case it is shared among other users. The following image shows how the imported dimension and fact tables would look like in Power BI:
 
 ![data_model](images/data_model.png)
 
